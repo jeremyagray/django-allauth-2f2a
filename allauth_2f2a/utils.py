@@ -1,23 +1,23 @@
 from base64 import b32encode
 from io import BytesIO
-from urllib.parse import quote, urlencode
-
-from django.contrib.sites.shortcuts import get_current_site
+from urllib.parse import quote
+from urllib.parse import urlencode
 
 import qrcode
+from django.contrib.sites.shortcuts import get_current_site
 from qrcode.image.svg import SvgPathImage
 
 
 def generate_totp_config_svg(device, issuer, label):
     params = {
-        'secret': b32encode(device.bin_key).decode('utf-8'),
-        'algorithm': 'SHA1',
-        'digits': device.digits,
-        'period': device.step,
-        'issuer': issuer,
+        "secret": b32encode(device.bin_key).decode("utf-8"),
+        "algorithm": "SHA1",
+        "digits": device.digits,
+        "period": device.step,
+        "issuer": issuer,
     }
 
-    otpauth_url = 'otpauth://totp/{label}?{query}'.format(
+    otpauth_url = "otpauth://totp/{label}?{query}".format(
         label=quote(label),
         query=urlencode(params),
     )
@@ -30,9 +30,8 @@ def generate_totp_config_svg(device, issuer, label):
 
 def generate_totp_config_svg_for_device(request, device):
     issuer = get_current_site(request).name
-    label = '{issuer}: {username}'.format(
-        issuer=issuer,
-        username=request.user.get_username()
+    label = "{issuer}: {username}".format(
+        issuer=issuer, username=request.user.get_username()
     )
     return generate_totp_config_svg(device=device, issuer=issuer, label=label)
 

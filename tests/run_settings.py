@@ -2,8 +2,7 @@
 
 from tests.settings import *
 
-
 DEBUG = True
-DATABASES['default']['NAME'] = 'db.sqlite'
+DATABASES["default"]["NAME"] = "db.sqlite"
 
-INSTALLED_APPS += ('django_extensions', )
+INSTALLED_APPS += ("django_extensions",)
