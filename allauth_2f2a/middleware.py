@@ -25,7 +25,7 @@ class AllauthTwoFactorMiddleware(MiddlewareMixin):
             "two-factor-authenticate"
         ):
             try:
-                del request.session["allauth_2fa_user_id"]
+                del request.session["allauth_2f2a_user_id"]
             except KeyError:
                 pass
 

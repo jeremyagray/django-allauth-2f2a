@@ -4,7 +4,7 @@ from urllib.parse import urlparse
 from urllib.parse import urlunparse
 
 from allauth.account.signals import user_logged_in
-from allauth_2fa.middleware import BaseRequire2FAMiddleware
+from allauth_2f2a.middleware import BaseRequire2FAMiddleware
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.test import TestCase
@@ -137,13 +137,13 @@ class Test2Factor(TestCase):
         )
 
         # The user ID should be in the session.
-        self.assertIn("allauth_2fa_user_id", self.client.session)
+        self.assertIn("allauth_2f2a_user_id", self.client.session)
 
         # Navigate to a different page.
         self.client.get(reverse("account_login"))
 
         # The middleware should reset the login flow.
-        self.assertNotIn("allauth_2fa_user_id", self.client.session)
+        self.assertNotIn("allauth_2f2a_user_id", self.client.session)
 
         # Trying to continue with two-factor without logging in again will
         # redirect to login.
@@ -253,13 +253,13 @@ class Test2Factor(TestCase):
         )
 
         # The user ID should be in the session.
-        self.assertIn("allauth_2fa_user_id", self.client.session)
+        self.assertIn("allauth_2f2a_user_id", self.client.session)
 
         # Navigate to a different (unnamed) page.
         resp = self.client.get("/unnamed-view")
 
         # The middleware should reset the login flow.
-        self.assertNotIn("allauth_2fa_user_id", self.client.session)
+        self.assertNotIn("allauth_2f2a_user_id", self.client.session)
 
         # Trying to continue with two-factor without logging in again will
         # redirect to login.
@@ -327,7 +327,7 @@ class Require2FA(BaseRequire2FAMiddleware):
     # Don't redirect to an "allowed" URL.
     LOGIN_REDIRECT_URL="/unnamed-view",
     # Add the middleware that requires 2FA.
-    MIDDLEWARE=settings.MIDDLEWARE + ("tests.test_allauth_2fa.Require2FA",),
+    MIDDLEWARE=settings.MIDDLEWARE + ("tests.test_allauth_2f2a.Require2FA",),
 )
 class TestRequire2FAMiddleware(TestCase):
     def test_no_2fa(self):
@@ -376,7 +376,7 @@ class TestRequire2FAMiddleware(TestCase):
         # middleware here.
         MIDDLEWARE=settings.MIDDLEWARE
         + (
-            "tests.test_allauth_2fa.Require2FA",
+            "tests.test_allauth_2f2a.Require2FA",
             "django.contrib.messages.middleware.MessageMiddleware",
         ),
     )

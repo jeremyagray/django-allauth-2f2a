@@ -1,4 +1,4 @@
-from allauth_2fa import views
+from allauth_2f2a import views
 from django.conf.urls import url
 
 urlpatterns = [

@@ -49,7 +49,7 @@ INSTALLED_APPS = (
     "django_otp.plugins.otp_totp",
     "django_otp.plugins.otp_static",
     # Enable two-factor auth.
-    "allauth_2fa",
+    "allauth_2f2a",
     # Test app.
     "tests",
 )
@@ -61,7 +61,7 @@ MIDDLEWARE = (
     # Configure the django-otp package.
     "django_otp.middleware.OTPMiddleware",
     # Reset login flow middleware.
-    "allauth_2fa.middleware.AllauthTwoFactorMiddleware",
+    "allauth_2f2a.middleware.AllauthTwoFactorMiddleware",
 )
 
 if django.VERSION < (2,):
@@ -70,4 +70,4 @@ if django.VERSION < (2,):
 AUTHENTICATION_BACKENDS = ("django.contrib.auth.backends.ModelBackend",)
 
 # Enable two-factor auth.
-ACCOUNT_ADAPTER = "allauth_2fa.adapter.OTPAdapter"
+ACCOUNT_ADAPTER = "allauth_2f2a.adapter.OTPAdapter"

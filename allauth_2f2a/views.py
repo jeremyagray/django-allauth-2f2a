@@ -3,13 +3,13 @@ from base64 import b64encode
 from allauth.account import signals
 from allauth.account.adapter import get_adapter
 from allauth.account.utils import get_login_redirect_url
-from allauth_2fa import app_settings
-from allauth_2fa.forms import TOTPAuthenticateForm
-from allauth_2fa.forms import TOTPDeviceForm
-from allauth_2fa.forms import TOTPDeviceRemoveForm
-from allauth_2fa.mixins import ValidTOTPDeviceRequiredMixin
-from allauth_2fa.utils import generate_totp_config_svg_for_device
-from allauth_2fa.utils import user_has_valid_totp_device
+from allauth_2f2a import app_settings
+from allauth_2f2a.forms import TOTPAuthenticateForm
+from allauth_2f2a.forms import TOTPDeviceForm
+from allauth_2f2a.forms import TOTPDeviceRemoveForm
+from allauth_2f2a.mixins import ValidTOTPDeviceRequiredMixin
+from allauth_2f2a.utils import generate_totp_config_svg_for_device
+from allauth_2f2a.utils import user_has_valid_totp_device
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -25,14 +25,14 @@ from django_otp.plugins.otp_totp.models import TOTPDevice
 
 
 class TwoFactorAuthenticate(FormView):
-    template_name = "allauth_2fa/authenticate." + app_settings.TEMPLATE_EXTENSION
+    template_name = "allauth_2f2a/authenticate." + app_settings.TEMPLATE_EXTENSION
     form_class = TOTPAuthenticateForm
 
     def dispatch(self, request, *args, **kwargs):
         # If the user is not about to enter their two-factor credentials,
         # redirect to the login page (they shouldn't be here!). This includes
         # anonymous users.
-        if "allauth_2fa_user_id" not in request.session:
+        if "allauth_2f2a_user_id" not in request.session:
             # Don't use the redirect_to_login here since we don't actually want
             # to include the next parameter.
             return redirect("account_login")
@@ -40,7 +40,7 @@ class TwoFactorAuthenticate(FormView):
 
     def get_form_kwargs(self):
         kwargs = super(TwoFactorAuthenticate, self).get_form_kwargs()
-        user_id = self.request.session["allauth_2fa_user_id"]
+        user_id = self.request.session["allauth_2f2a_user_id"]
         kwargs["user"] = get_user_model().objects.get(id=user_id)
         return kwargs
 
@@ -82,7 +82,7 @@ class TwoFactorAuthenticate(FormView):
 
 
 class TwoFactorSetup(LoginRequiredMixin, FormView):
-    template_name = "allauth_2fa/setup." + app_settings.TEMPLATE_EXTENSION
+    template_name = "allauth_2f2a/setup." + app_settings.TEMPLATE_EXTENSION
     form_class = TOTPDeviceForm
     success_url = reverse_lazy("two-factor-backup-tokens")
 
@@ -135,7 +135,7 @@ class TwoFactorSetup(LoginRequiredMixin, FormView):
 
 
 class TwoFactorRemove(ValidTOTPDeviceRequiredMixin, FormView):
-    template_name = "allauth_2fa/remove." + app_settings.TEMPLATE_EXTENSION
+    template_name = "allauth_2f2a/remove." + app_settings.TEMPLATE_EXTENSION
     form_class = TOTPDeviceRemoveForm
     success_url = reverse_lazy("two-factor-setup")
 
@@ -150,7 +150,7 @@ class TwoFactorRemove(ValidTOTPDeviceRequiredMixin, FormView):
 
 
 class TwoFactorBackupTokens(ValidTOTPDeviceRequiredMixin, TemplateView):
-    template_name = "allauth_2fa/backup_tokens." + app_settings.TEMPLATE_EXTENSION
+    template_name = "allauth_2f2a/backup_tokens." + app_settings.TEMPLATE_EXTENSION
     # This can be overridden in a subclass to True,
     # to have that particular view always reveal the tokens.
     reveal_tokens = bool(app_settings.ALWAYS_REVEAL_BACKUP_TOKENS)

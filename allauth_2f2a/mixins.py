@@ -1,4 +1,4 @@
-from allauth_2fa.utils import user_has_valid_totp_device
+from allauth_2f2a.utils import user_has_valid_totp_device
 from django.contrib.auth.mixins import AccessMixin
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
