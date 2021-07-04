@@ -1,19 +1,21 @@
+# Emacs.
+*~
+
+# Python.
 *.pyc
 __pycache__/
-*.sw*
-db.sqlite
-.idea/
 
-# Distributions.
+# Django.
+db.sqlite
+
+# Build.
 .eggs/
+_build
 build/
 dist/
 django_allauth_2fa.egg-info/
 
-# Testing
+# Testing.
 .coverage
-htmlcov
 .tox
-
-# Docs
-_build
+htmlcov
