@@ -104,6 +104,7 @@ django-allauth = "^0.44.0"
 django-loader = "^0.0.3"
 python = "^3.9"
 django-otp = "^1.0.6"
+qrcode = "^7.1"
 
 [tool.poetry.dev-dependencies]
 
