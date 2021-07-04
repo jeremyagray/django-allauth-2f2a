@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+
+"""Django management script."""
+
 import os
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tests.settings')

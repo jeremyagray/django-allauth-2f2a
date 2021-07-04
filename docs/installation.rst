@@ -90,7 +90,7 @@ Finally, you must include the django-allauth-2fa URLs:
     ``/admin/login``).
 
     The easiest way to fix this is to wrap it in ``staff_member_required`` decorator
-    and disallow access to the admin site to all, except logged in staff members 
+    and disallow access to the admin site to all, except logged in staff members
     through allauth workflow.
     (the code only works if you use the standard admin site, if you have a
     custom admin site you'll need to customize this more):
