@@ -1,0 +1,122 @@
+# ******************************************************************************
+#
+# pyproject.toml:  poetry and friends configuration
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+# ******************************************************************************
+#
+# Copyright 2021 Jeremy A Gray <gray@flyquackswim.com>.
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you
+# may not use this file except in compliance with the License.  You
+# may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+# implied.  See the License for the specific language governing
+# permissions and limitations under the License.
+#
+# ******************************************************************************
+
+[tool]
+
+[tool.black]
+
+line-length = 88
+target-version = ['py38']
+include = '\.pyi?$'
+exclude = '''
+(
+  /(
+    \.git
+    | \.pytest_cache
+    | __pycache__
+    | htmlcov
+  )/
+)
+'''
+force_exclude = 'manage\.py|.*/migrations/.*'
+
+[tool.coverage.run]
+
+omit = ["*migrations*"]
+
+[tool.isort]
+
+ensure_newline_before_comments = true
+force_single_line = true
+include_trailing_comma = true
+line_length = 88
+multi_line_output = 3
+use_parentheses = true
+
+[tool.pccc]
+
+header_length = 50
+body_length = 72
+rewrap = false
+spell_check = false
+repair = false
+
+types = [
+"build",
+"ci",
+"db",
+"depends",
+"docs",
+"feat",
+"fix",
+"perf",
+"refactor",
+"style",
+"test"
+]
+
+scopes = [
+"2fa",
+"fake",
+]
+
+footers = [
+"signed-off-by"
+]
+
+required_footers = [
+"signed-off-by"
+]
+
+[tool.poetry]
+
+authors = ["Jeremy A Gray <gray@flyquackswim.com>"]
+maintainers = ["Jeremy A Gray <gray@flyquackswim.com>"]
+description = "Django allauth adapter for two factor authentication"
+name = "django-allauth-2f2a"
+version = "0.8.0"
+
+[tool.poetry.dependencies]
+
+Django = "^3.1"
+django-allauth = "^0.44.0"
+django-loader = "^0.0.3"
+python = "^3.9"
+
+[tool.poetry.dev-dependencies]
+
+black = { version = "*", allow-prereleases = true }
+docutils = "^0.16"
+flake8 = "^3.8"
+flake8-docstrings = "^1.5"
+isort = "^5.6"
+pccc = "^0.4"
+pre-commit = "^2.9"
+pytest = "^6.1"
+pytest-cov = "^2.10"
+pytest-django = "^4.1"
+
+[tool.pytest.ini_options]
+
+DJANGO_SETTINGS_MODULE = 'fake.settings'
