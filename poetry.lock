@@ -216,6 +216,20 @@ Django = "*"
 toml = "*"
 
 [[package]]
+name = "django-otp"
+version = "1.0.6"
+description = "A pluggable framework for adding two-factor authentication to Django using one-time passwords."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+django = ">=2.2"
+
+[package.extras]
+qrcode = ["qrcode"]
+
+[[package]]
 name = "docutils"
 version = "0.16"
 description = "Docutils -- Python Documentation Utilities"
@@ -676,7 +690,7 @@ testing = ["coverage (>=4)", "coverage-enable-subprocess (>=1)", "flaky (>=3)", 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "047423a1d42b222e6f206f8aa081aedf8200190f46f5dc3d84ef63072c72e4ea"
+content-hash = "aedd206c43b82e0960688f4d4c019462a27475735ab24e424b423e35019e8988"
 
 [metadata.files]
 appdirs = [
@@ -848,6 +862,10 @@ django-allauth = [
 django-loader = [
     {file = "django-loader-0.0.3.tar.gz", hash = "sha256:07d31cc5bc65b078816a517c6450e311275f2c4bb6d27d063c689d73572ca280"},
     {file = "django_loader-0.0.3-py3-none-any.whl", hash = "sha256:d40bdc31390f308b42bfb1ef612e0484cc8d218701c19bc6b72c64d98d6b5d00"},
+]
+django-otp = [
+    {file = "django-otp-1.0.6.tar.gz", hash = "sha256:0d56dd2a7fbb6ee6e54557e036ca64add0bd3596f471794bad673b7637d5e935"},
+    {file = "django_otp-1.0.6-py3-none-any.whl", hash = "sha256:01b5888f0bde5125e139433aacb947e52d5c406fa56c9db43c3e8d75b5c323c4"},
 ]
 docutils = [
     {file = "docutils-0.16-py2.py3-none-any.whl", hash = "sha256:0c5b78adfbf7762415433f5515cd5c9e762339e23369dbe8000d84a4bf4ab3af"},
