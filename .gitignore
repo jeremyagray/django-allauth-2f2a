@@ -4,6 +4,7 @@
 # Python.
 *.pyc
 __pycache__/
+.python-version
 
 # Django.
 db.sqlite
@@ -13,7 +14,7 @@ db.sqlite
 _build
 build/
 dist/
-django_allauth_2fa.egg-info/
+django_allauth_2f2a.egg-info/
 
 # Testing.
 .coverage
