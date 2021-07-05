@@ -8,6 +8,8 @@
 #
 # ******************************************************************************
 #
+# Copyright 2016-2021 Víðir Valberg Guðmundsson and Percipient
+# Networks, LLC.
 # Copyright 2021 Jeremy A Gray <gray@flyquackswim.com>.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
