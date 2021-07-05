@@ -74,6 +74,7 @@ types = [
 "fix",
 "perf",
 "refactor",
+"release",
 "style",
 "test"
 ]
@@ -93,11 +94,15 @@ required_footers = [
 
 [tool.poetry]
 
-authors = ["Jeremy A Gray <gray@flyquackswim.com>"]
-maintainers = ["Jeremy A Gray <gray@flyquackswim.com>"]
-description = "Django allauth adapter for two factor authentication"
+authors = [
+    "Jeremy A Gray <gray@flyquackswim.com>",
+]
+maintainers = [
+    "Jeremy A Gray <gray@flyquackswim.com>",
+]
+description = "Django allauth adapter for two factor authentication."
 name = "django-allauth-2f2a"
-version = "0.8.0"
+version = "0.8.1"
 
 [tool.poetry.dependencies]
 

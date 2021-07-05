@@ -42,7 +42,7 @@ def long_description():
 
 setup(
     name="django-allauth-2f2a",
-    version="0.8.0",
+    version="0.8.1",
     packages=find_packages(".", include=("allauth_2f2a", "allauth_2f2a.*")),
     include_package_data=True,
     install_requires=[
