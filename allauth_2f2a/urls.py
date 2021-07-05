@@ -28,26 +28,24 @@
 #
 """URL routing for allauth_2f2a module."""
 
-from django.conf.urls import url
+from django.urls import re_path
 
 from allauth_2f2a import views
 
 urlpatterns = [
-    url(
-        r"^two-factor-authenticate/?$",
+    re_path(
+        r"^2fa/authenticate/?$",
         views.TwoFactorAuthenticate.as_view(),
         name="two-factor-authenticate",
     ),
-    url(
-        r"^two_factor/setup/?$", views.TwoFactorSetup.as_view(), name="two-factor-setup"
-    ),
-    url(
-        r"^two_factor/backup_tokens/?$",
+    re_path(r"^2fa/setup/?$", views.TwoFactorSetup.as_view(), name="two-factor-setup"),
+    re_path(
+        r"^2fa/backup/?$",
         views.TwoFactorBackupTokens.as_view(),
-        name="two-factor-backup-tokens",
+        name="two-factor-backup",
     ),
-    url(
-        r"^two_factor/remove/?$",
+    re_path(
+        r"^2fa/remove/?$",
         views.TwoFactorRemove.as_view(),
         name="two-factor-remove",
     ),

@@ -343,7 +343,7 @@ class Test2Factor(TestCase):
         # Some pages redirect to the login page and then will redirect back.
         for url in [
             "two-factor-setup",
-            "two-factor-backup-tokens",
+            "two-factor-backup",
             "two-factor-remove",
         ]:
             url = reverse(url)
@@ -436,7 +436,7 @@ class Test2Factor(TestCase):
         )
 
         # The 2FA pages should redirect.
-        for url_name in ["two-factor-backup-tokens", "two-factor-remove"]:
+        for url_name in ["two-factor-backup", "two-factor-remove"]:
             resp = self.client.get(reverse(url_name))
             self.assertRedirects(
                 resp,

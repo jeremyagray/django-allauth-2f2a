@@ -35,6 +35,10 @@
 0.9.0
 =====
 
+* Change URL paths to use ``/2fa/<function>/`` and names
+  ``two-factor-<function>``.
+* Change URL routes to use ``django.urls.re_path()`` instead of
+  ``django.conf.urls.url()``.
 * Add form selection as in `django-allauth`_ to allow for form
   customization.
 * Add option to generate `QR code`_ as a file or as an inline data: URI.

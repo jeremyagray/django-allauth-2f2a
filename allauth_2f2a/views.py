@@ -137,14 +137,14 @@ class TwoFactorSetup(LoginRequiredMixin, FormView):
 
     template_name = "allauth_2f2a/setup." + app_settings.TEMPLATE_EXTENSION
     form_class = TOTPDeviceForm
-    success_url = reverse_lazy("two-factor-backup-tokens")
+    success_url = reverse_lazy("two-factor-backup")
 
     def dispatch(self, request, *args, **kwargs):
         """Dispatch to setup or backup view."""
         # If the user has 2fa configured, redirect them to the backup
         # tokens.
         if user_has_valid_totp_device(request.user):
-            return HttpResponseRedirect(reverse("two-factor-backup-tokens"))
+            return HttpResponseRedirect(reverse("two-factor-backup"))
 
         # Continue to 2fa setup otherwise.
         return super(TwoFactorSetup, self).dispatch(request, *args, **kwargs)
