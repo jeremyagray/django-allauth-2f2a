@@ -109,8 +109,8 @@ version = "0.8.1"
 Django = "^3.2"
 django-allauth = "^0.44.0"
 django-loader = "^0.0.3"
-python = "^3.9"
 django-otp = "^1.0.6"
+python = "^3.9"
 qrcode = "^7.1"
 
 [tool.poetry.dev-dependencies]
@@ -131,4 +131,4 @@ tox = "^3.23.1"
 
 [tool.pytest.ini_options]
 
-DJANGO_SETTINGS_MODULE = 'fake.settings'
+DJANGO_SETTINGS_MODULE = 'tests.settings'
