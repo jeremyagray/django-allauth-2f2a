@@ -30,6 +30,7 @@
 
 import django
 
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 SECRET_KEY = "not_empty"
 SITE_ID = 1
 ALLOWED_HOSTS = ["*"]
@@ -93,9 +94,6 @@ MIDDLEWARE = (
     # Reset login flow middleware.
     "allauth_2f2a.middleware.AllauthTwoFactorMiddleware",
 )
-
-if django.VERSION < (2,):
-    MIDDLEWARE += ("django.contrib.auth.middleware.SessionAuthenticationMiddleware",)
 
 AUTHENTICATION_BACKENDS = ("django.contrib.auth.backends.ModelBackend",)
 
