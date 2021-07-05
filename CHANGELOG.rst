@@ -1,15 +1,57 @@
+.. *****************************************************************************
+..
+.. CHANGELOG.rst:  project changelog
+..
+.. SPDX-License-Identifier: Apache-2.0
+..
+.. *****************************************************************************
+..
+.. Copyright 2016-2021 Víðir Valberg Guðmundsson and Percipient
+.. Networks, LLC.
+.. Copyright 2021 Jeremy A Gray <gray@flyquackswim.com>.
+..
+.. Licensed under the Apache License, Version 2.0 (the "License"); you
+.. may not use this file except in compliance with the License.  You
+.. may obtain a copy of the License at
+..
+.. http://www.apache.org/licenses/LICENSE-2.0
+..
+.. Unless required by applicable law or agreed to in writing, software
+.. distributed under the License is distributed on an "AS IS" BASIS,
+.. WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+.. implied.  See the License for the specific language governing
+.. permissions and limitations under the License.
+..
+.. *****************************************************************************
+
 .. :changelog:
 
-Changelog
-#########
+===========
+ Changelog
+===========
 
-next
-====
+0.8.1 July 4, 2021
+==================
 
-* Improves documentation for protection Django admin with 2FA. Contributed by
-  @hailkomputer in #91.
-* Autocomplete on the token entry form is disabled. Contributed by @qvicksilver
-  in #95.
+* Add python 3.9.
+* Drop python <3.6.
+* Drop Django <2.2, 3.1.
+* Drop django-otp <1.0.
+* Drop django-allauth <0.44.0.
+* Fix all flake8/pydocstyle linting errors.
+* Reformat with black and isort.
+* Support poetry and pyproject.toml.
+* Add black, flake8-docstrings, pydocstyle, isort, pccc, and
+  pre-commit.
+
+0.8.0 July 3, 2021
+==================
+
+* Fork from django-allauth-2fa to django-allauth-2f2a.
+* Improves documentation for protection of Django admin with
+  2FA. Contributed by @hailkomputer in #91.
+* Autocomplete on the token entry form is disabled. Contributed by
+  @qvicksilver in #95.
 
 0.8 February 3, 2020
 ====================

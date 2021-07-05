@@ -1,6 +1,6 @@
 .. *****************************************************************************
 ..
-.. changelog.rst:  include changelog in documentation
+.. license.rst:  include license in documentation
 ..
 .. SPDX-License-Identifier: Apache-2.0
 ..
@@ -25,4 +25,4 @@
 .. *****************************************************************************
 
 .. include:: links.rst
-.. include:: ../CHANGELOG.rst
+.. include:: ../LICENSE.rst

@@ -1,77 +1,74 @@
-Welcome to django-allauth-2fa!
-==============================
+.. *****************************************************************************
+..
+.. README.rst:  project readme
+..
+.. SPDX-License-Identifier: Apache-2.0
+..
+.. *****************************************************************************
+..
+.. Copyright 2016-2021 Víðir Valberg Guðmundsson and Percipient
+.. Networks, LLC.
+.. Copyright 2021 Jeremy A Gray <gray@flyquackswim.com>.
+..
+.. Licensed under the Apache License, Version 2.0 (the "License"); you
+.. may not use this file except in compliance with the License.  You
+.. may obtain a copy of the License at
+..
+.. http://www.apache.org/licenses/LICENSE-2.0
+..
+.. Unless required by applicable law or agreed to in writing, software
+.. distributed under the License is distributed on an "AS IS" BASIS,
+.. WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+.. implied.  See the License for the specific language governing
+.. permissions and limitations under the License.
+..
+.. *****************************************************************************
 
-.. image:: https://github.com/valohai/django-allauth-2fa/actions/workflows/ci.yml/badge.svg
-    :target: https://github.com/valohai/django-allauth-2fa/actions/workflows/ci.yml
+=====================
+ django-allauth-2f2a
+=====================
 
-.. image:: https://coveralls.io/repos/github/percipient/django-allauth-2fa/badge.svg?branch=master
-    :target: https://coveralls.io/github/percipient/django-allauth-2fa?branch=master
-
-.. image:: https://readthedocs.org/projects/django-allauth-2fa/badge/?version=latest
-    :target: https://django-allauth-2fa.readthedocs.io/
-
-django-allauth-2fa adds `two-factor authentication`_ to `django-allauth`_.
-django-allauth is a set of `Django`_ applications which help with
-authentication, registration, and other account management tasks.
-
-Source code
-    http://github.com/percipient/django-allauth-2fa
-Documentation
-    https://django-allauth-2fa.readthedocs.io/
-
-.. _two-factor authentication: https://en.wikipedia.org/wiki/Multi-factor_authentication
-.. _django-allauth: https://github.com/pennersr/django-allauth
-.. _Django: https://www.djangoproject.com/
+`django-allauth-2f2a`_ is a port of `django-allauth-2fa`_ that adds
+`two-factor authentication`_ to `django-allauth`_ and intends to
+continue active development of the code.  The current goals include
+generating `SVG`_ codes as files to allow stricter `content security
+policies`_, configuration of form classes used by the app to allow
+subclassing forms for use with `django-crispy-forms`_, and improved
+`CI`_ and testing.
 
 Features
---------
+========
 
-* Adds `two-factor authentication`_ views and workflow to `django-allauth`_.
-* Supports Authenticator apps via a QR code when enabling 2FA.
-* Supports single-use back-up codes.
+* Add `two-factor authentication`_ views and workflow to
+  `django-allauth`_.
+* Support Authenticator apps via a `QR code`_ when enabling `2FA`_.
+* Support single-use back-up codes.
 
 Compatibility
--------------
+=============
 
-django-allauth-2fa attempts to maintain compatibility with supported versions of
-Django, django-allauth, and django-otp. Current minimum versions are listed
-below:
+`django-allauth-2f2a`_ will only maintain compatibility with supported
+versions of `Django`_ and `python`_ and recent, secure versions of
+`django-allauth`_, and `django-otp`_, currently:
 
-* Django 1.11
-* django-allauth 0.25.0
-* django-otp 0.3.12
-* Python 3.5
+* `Python`_ 3.6-3.9.
+* `Django`_ 2.2, 3.2.
+* `django-allauth`_ 0.44.0 and newer.
+* `django-otp`_ 1.0.0 and newer.
 
-Contributing
-------------
+Running Tests
+=============
 
-django-allauth-2fa was initially created by
-`Víðir Valberg Guðmundsson (@valberg)`_, and is currently maintained by
-`Percipient Networks`_. Please feel free to contribute if you find
-django-allauth-2fa useful!
-
-#. Check for open issues or open a fresh issue to start a discussion
-   around a feature idea or a bug.
-#. If you feel uncomfortable or uncertain about an issue or your changes,
-   feel free to email support@percipientnetworks.com and we will happily help you.
-#. Fork `the repository`_ on GitHub to start making your changes to the
-   **master** branch (or branch off of it).
-#. Write a test which shows that the bug was fixed or that the feature
-   works as expected.
-#. Send a pull request and bug the maintainer until it gets merged and
-   published.
-
-Running tests
-'''''''''''''
-
-Tests can be run using the standard Django testing facility:
+Currently, tests can be run using the standard Django testing facility:
 
 .. code-block:: bash
 
     python manage.py test
 
-Running the test project
-''''''''''''''''''''''''
+Project tests will be moved to pytest in the future.
+
+Running the Test Project
+========================
 
 The test project can also be used as a minimal example using the following:
 
@@ -84,6 +81,7 @@ The test project can also be used as a minimal example using the following:
     # Run the shell.
     DJANGO_SETTINGS_MODULE=tests.run_settings python manage.py shell_plus
 
-.. _Víðir Valberg Guðmundsson (@valberg): https://github.com/valberg
-.. _Percipient Networks: https://www.strongarm.io
-.. _the repository: http://github.com/percipient/django-allauth-2fa
+Author
+======
+
+`django-allauth-2fa`_ was originally created by `Víðir Valberg Guðmundsson (@valberg)`_ of `Percipient Networks`_.  All modifications after the port to `django-allauth-2f2a`_ are created and maintained by `Jeremy A Gray`_ at `FQS`_.
