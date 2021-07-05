@@ -58,6 +58,8 @@ from allauth_2f2a.mixins import ValidTOTPDeviceRequiredMixin
 from allauth_2f2a.utils import generate_totp_config_svg_for_device
 from allauth_2f2a.utils import user_has_valid_totp_device
 
+from .utils import get_form_class
+
 
 class TwoFactorAuthenticate(FormView):
     """2fa authentication view."""
@@ -75,6 +77,14 @@ class TwoFactorAuthenticate(FormView):
 
         # Dispatch 2fa authentication.
         return super(TwoFactorAuthenticate, self).dispatch(request, *args, **kwargs)
+
+    def get_form_class(self):
+        """Get the authentication form class."""
+        return get_form_class(
+            app_settings.TWOFA_FORMS,
+            "authenticate",
+            "allauth_2f2a.forms.TOTPAuthenticateForm",
+        )
 
     def get_form_kwargs(self):
         """Grab user and insert into ``kwargs``."""
@@ -138,6 +148,14 @@ class TwoFactorSetup(LoginRequiredMixin, FormView):
 
         # Continue to 2fa setup otherwise.
         return super(TwoFactorSetup, self).dispatch(request, *args, **kwargs)
+
+    def get_form_class(self):
+        """Get the device creation form class."""
+        return get_form_class(
+            app_settings.TWOFA_FORMS,
+            "device",
+            "allauth_2f2a.forms.TOTPDeviceForm",
+        )
 
     def _new_device(self):
         """Generate a new ``django_otp.plugins.otp_totp.models.TOTPDevice``.
@@ -229,6 +247,14 @@ class TwoFactorRemove(ValidTOTPDeviceRequiredMixin, FormView):
     template_name = "allauth_2f2a/remove." + app_settings.TEMPLATE_EXTENSION
     form_class = TOTPDeviceRemoveForm
     success_url = reverse_lazy("two-factor-setup")
+
+    def get_form_class(self):
+        """Get the device removal form class."""
+        return get_form_class(
+            app_settings.TWOFA_FORMS,
+            "remove",
+            "allauth_2f2a.forms.TOTPDeviceRemoveForm",
+        )
 
     def form_valid(self, form):
         """Save the removal data and continue form processing."""

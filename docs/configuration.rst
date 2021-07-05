@@ -61,3 +61,16 @@ covered by the typical 'self' directives in a strict CSP.  The file is
 generated with a UUID4 filename to avoid predictability.  Since all
 files are generated in the same directory, a periodic task to remove
 all files older than some time can be used to delete old QR codes.
+
+``ALLAUTH_2F2A_2FA_FORMS``
+==========================
+
+Dictionary.  Configure the forms uses for the TOTP authentication, TOTP device creation, and TOTP device removal forms.  This allows for subclassing and customization of these forms.  The forms can be then be converted to `django-crispy-forms`_, for example.  The defaults are the original forms.
+
+.. code-block:: python
+
+    ALLAUTH_2F2A_2FA_FORMS = {
+        "authentication": "allauth_2f2a.forms.TOTPAuthenticateForm",
+        "device": "allauth_2f2a.forms.TOTPDeviceForm",
+        "remove": "allauth_2f2a.forms.TOTPDeviceRemoveForm",
+    }

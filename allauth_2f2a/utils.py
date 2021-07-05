@@ -28,6 +28,7 @@
 #
 """Utilities for allauth_2f2a."""
 
+import importlib
 from base64 import b32encode
 from io import BytesIO
 from urllib.parse import quote
@@ -105,3 +106,20 @@ def user_has_valid_totp_device(user):
         return False
 
     return user.totpdevice_set.filter(confirmed=True).exists()
+
+
+# Idea and code borrowed from django-alluth form configuration.
+def import_attribute(path):
+    """Import an attribute given its string path."""
+    assert isinstance(path, str)
+    pkg, attr = path.rsplit(".", 1)
+    ret = getattr(importlib.import_module(pkg), attr)
+    return ret
+
+
+def get_form_class(forms, form_id, default_form):
+    """Return a form class."""
+    form_class = forms.get(form_id, default_form)
+    if isinstance(form_class, str):
+        form_class = import_attribute(form_class)
+    return form_class

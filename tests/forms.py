@@ -1,6 +1,6 @@
 # ******************************************************************************
 #
-# app_settings.py:  application settings loaded from settings.py
+# forms.py:  customized test forms
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -8,8 +8,6 @@
 #
 # ******************************************************************************
 #
-# Copyright 2016-2021 Víðir Valberg Guðmundsson and Percipient
-# Networks, LLC.
 # Copyright 2021 Jeremy A Gray <gray@flyquackswim.com>.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
@@ -26,37 +24,24 @@
 #
 # ******************************************************************************
 #
-"""Application settings loaded from settings.py."""
+"""Customized test forms."""
 
-from allauth.account import app_settings as allauth_settings
-from django.conf import settings
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
 
-TEMPLATE_EXTENSION = getattr(
-    settings,
-    "ALLAUTH_2F2A_TEMPLATE_EXTENSION",
-    allauth_settings.TEMPLATE_EXTENSION,
-)
+from allauth_2f2a.forms import TOTPAuthenticateForm
 
-ALWAYS_REVEAL_BACKUP_TOKENS = bool(
-    getattr(
-        settings,
-        "ALLAUTH_2F2A_ALWAYS_REVEAL_BACKUP_TOKENS",
-        True,
-    ),
-)
 
-QRCODE_TYPE = getattr(
-    settings,
-    "ALLAUTH_2F2A_QRCODE_TYPE",
-    "data",
-)
+class CrispyTOTPAuthenticateForm(TOTPAuthenticateForm):
+    """Crispy TOTP authentication."""
 
-TWOFA_FORMS = getattr(
-    settings,
-    "ALLAUTH_2F2A_2FA_FORMS",
-    {
-        "authentication": "allauth_2f2a.forms.TOTPAuthenticateForm",
-        "device": "allauth_2f2a.forms.TOTPDeviceForm",
-        "remove": "allauth_2f2a.forms.TOTPDeviceRemoveForm",
-    },
-)
+    def __init__(self, *args, **kwargs):
+        """Login form initialization."""
+        super().__init__(*args, **kwargs)
+
+        # Add the crispy forms helper.
+        self.helper = FormHelper(self)
+        self.helper.form_method = "post"
+        self.helper.layout.append(
+            Submit("submit", "Authenticate", css_class="btn-primary"),
+        )

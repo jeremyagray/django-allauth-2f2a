@@ -32,7 +32,14 @@
  Changelog
 ===========
 
-0.8.1 July 4, 2021
+0.9.0
+=====
+
+* Add form selection as in `django-allauth`_ to allow for form
+  customization.
+* Add option to generate `QR code`_ as a file or as an inline data: URI.
+
+0.8.1 July 5, 2021
 ==================
 
 * Add `python`_ 3.9.

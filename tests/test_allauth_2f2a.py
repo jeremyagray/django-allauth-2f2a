@@ -73,6 +73,19 @@ class Test2Factor(TestCase):
         self.user_logged_in_count = 0
         user_logged_in.connect(self._login_callback)
 
+    def tearDown(self):
+        """Reset after each test."""
+        # Set TWOFA_FORMS to default.
+        setattr(
+            app_settings,
+            "TWOFA_FORMS",
+            {
+                "authenticate": "allauth_2f2a.forms.TOTPAuthenticateForm",
+                "device": "allauth_2f2a.forms.TOTPDeviceForm",
+                "remove": "allauth_2f2a.forms.TOTPDeviceRemoveForm",
+            },
+        )
+
     def _login_callback(self, sender, **kwargs):
         """Increment the login count."""
         self.user_logged_in_count += 1
@@ -98,6 +111,53 @@ class Test2Factor(TestCase):
 
     def test_2fa_login(self):
         """Should login when 2fa is configured."""
+        user = get_user_model().objects.create(username="john")
+        user.set_password("doe")
+        user.save()
+        totp_model = user.totpdevice_set.create()
+
+        resp = self.client.post(
+            reverse("account_login"),
+            {"login": "john", "password": "doe"},
+        )
+        self.assertRedirects(
+            resp,
+            reverse("two-factor-authenticate"),
+            fetch_redirect_response=False,
+        )
+
+        # Now ensure that logging in actually works.
+        totp = TOTP(
+            totp_model.bin_key,
+            totp_model.step,
+            totp_model.t0,
+            totp_model.digits,
+        )
+        resp = self.client.post(
+            reverse("two-factor-authenticate"),
+            {"otp_token": totp.token()},
+        )
+        self.assertRedirects(
+            resp,
+            settings.LOGIN_REDIRECT_URL,
+            fetch_redirect_response=False,
+        )
+
+        # Ensure the signal is received as expected.
+        self.assertEqual(self.user_logged_in_count, 1)
+
+    def test_2fa_login_custom_form(self):
+        """Should login when 2fa is configured."""
+        setattr(
+            app_settings,
+            "TWOFA_FORMS",
+            {
+                "authenticate": "tests.forms.CrispyTOTPAuthenticateForm",
+                "device": "allauth_2f2a.forms.TOTPDeviceForm",
+                "remove": "allauth_2f2a.forms.TOTPDeviceRemoveForm",
+            },
+        )
+
         user = get_user_model().objects.create(username="john")
         user.set_password("doe")
         user.save()
