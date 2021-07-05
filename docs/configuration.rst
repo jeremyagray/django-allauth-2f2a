@@ -45,3 +45,19 @@ from allauth, which is ``html`` by default.
 Boolean.  Show the remaining backup tokens on the Backup Tokens view
 if ``True``.  If ``False``, only show the backup tokens when they are
 generated.  Defaults to ``True``.
+
+``ALLAUTH_2F2A_QRCODE_TYPE``
+============================
+
+String.  Configure the generation of the QR code image.
+
+Defaults to ``data`` for a base64 encoded SVG image using the 'data:'
+protocol.  Setting this to ``file`` will use an SVG file stored in
+``settings.MEDIA_ROOT/qrcodes/``.
+
+Use of the 'data:' protocol must be specifically allowed by sites that
+are using a strict CSP.  By providing the image as a file, it is
+covered by the typical 'self' directives in a strict CSP.  The file is
+generated with a UUID4 filename to avoid predictability.  Since all
+files are generated in the same directory, a periodic task to remove
+all files older than some time can be used to delete old QR codes.

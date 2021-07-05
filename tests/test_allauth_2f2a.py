@@ -33,11 +33,14 @@ from urllib.parse import urlunparse
 from allauth.account.signals import user_logged_in
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ImproperlyConfigured
 from django.test import TestCase
 from django.test import override_settings
 from django.urls import reverse
 from django_otp.oath import TOTP
+from pyfakefs.fake_filesystem_unittest import patchfs
 
+from allauth_2f2a import app_settings
 from allauth_2f2a.middleware import BaseRequire2FAMiddleware
 
 
@@ -474,4 +477,59 @@ class TestRequire2FAMiddleware(TestCase):
         # The user is redirected to the 2FA setup page.
         self.assertRedirects(
             resp, reverse("two-factor-setup"), fetch_redirect_response=False
+        )
+
+
+class TestQRCodeGeneration(TestCase):
+    """Tests for QR code generation via file or data: protocol."""
+
+    def tearDown(self):
+        """Reset settings to default."""
+        setattr(app_settings, "QRCODE_TYPE", "data")
+
+    def test_2fa_setup_data(self):
+        """Test 2FA setup using 'data:' protocol."""
+        user = get_user_model().objects.create(username="john")
+        user.set_password("doe")
+        user.save()
+        self.client.post(reverse("account_login"), {"login": "john", "password": "doe"})
+        resp = self.client.get(reverse("two-factor-setup"))
+
+        self.assertContains(resp, "data:image/svg+xml;base64,")
+
+    @patchfs
+    def test_2fa_setup_file(self, fs):
+        """Test 2FA setup using an SVG file."""
+        # Create the fake qrcodes directory.
+        fs.create_dir("qrcodes")
+
+        user = get_user_model().objects.create(username="john")
+        user.set_password("doe")
+        user.save()
+        setattr(app_settings, "QRCODE_TYPE", "file")
+        self.client.post(reverse("account_login"), {"login": "john", "password": "doe"})
+        resp = self.client.get(reverse("two-factor-setup"))
+
+        # This could use a regular expression matching
+        # ``qrcodes/[a-f0-9]{32}\.svg``.
+        self.assertContains(resp, ".svg")
+
+    def test_2fa_setup_file_no_dir(self):
+        """Test 2FA setup using an SVG file without the qr code directory."""
+        user = get_user_model().objects.create(username="john")
+        user.set_password("doe")
+        user.save()
+        setattr(app_settings, "QRCODE_TYPE", "file")
+        self.client.post(
+            reverse("account_login"),
+            {
+                "login": "john",
+                "password": "doe",
+            },
+        )
+
+        self.assertRaises(
+            ImproperlyConfigured,
+            self.client.get,
+            reverse("two-factor-setup"),
         )

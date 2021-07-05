@@ -44,3 +44,9 @@ ALWAYS_REVEAL_BACKUP_TOKENS = bool(
         True,
     ),
 )
+
+QRCODE_TYPE = getattr(
+    settings,
+    "ALLAUTH_2F2A_QRCODE_TYPE",
+    "data",
+)

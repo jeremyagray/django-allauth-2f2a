@@ -28,14 +28,18 @@
 #
 """allauth_2f2a views."""
 
+import uuid
 from base64 import b64encode
+from pathlib import Path
 
 from allauth.account import signals
 from allauth.account.adapter import get_adapter
 from allauth.account.utils import get_login_redirect_url
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -153,9 +157,48 @@ class TwoFactorSetup(LoginRequiredMixin, FormView):
         return super(TwoFactorSetup, self).get(request, *args, **kwargs)
 
     def get_qr_code_data_uri(self):
-        """Return the QR SVG as an encoded data: URI."""
+        """Generate QR code image data.
+
+        Generate the 2FA QR code image data using either the 'data:'
+        protocol with a base64 encoded string or using a locally
+        generated file with a random filename.
+
+        Returns
+        -------
+        string
+            The URI of the image; either a base64 encoded SVG image
+            string with the 'data:' protocol or the URL of the SVG
+            image file.  Use of the 'data:' protocol requires a CSP
+            that allows that protocol for images.
+
+        Raises
+        ------
+        ImproperlyConfigured
+            If ``settings.MEDIA_ROOT/qrcodes`` is not a directory.
+        """
+        # Generate the QR code image.
         svg_data = generate_totp_config_svg_for_device(self.request, self.device)
-        return "data:image/svg+xml;base64,%s" % force_text(b64encode(svg_data))
+
+        # Serve QR code from file.
+        if app_settings.QRCODE_TYPE == "file":
+            qr_dir = Path(settings.MEDIA_ROOT) / "qrcodes"
+            # Raise exception if directory does not exist.
+            if not qr_dir.is_dir():
+                raise ImproperlyConfigured
+
+            # Generate a UUID file name to prevent prediction and to
+            # generate a useable Path() and URI.
+            id = uuid.uuid4().hex
+            fn = qr_dir / (id + ".svg")
+            uri = "/media/qrcodes/" + id + ".svg"
+
+            # svg_data is in bytes; write it to specified file.
+            with open(fn, "wb") as f:
+                f.write(svg_data)
+            return uri
+        # Serve QR code from data: protocol.  Beware the CSP implications.
+        else:
+            return "data:image/svg+xml;base64,%s" % force_text(b64encode(svg_data))
 
     def get_context_data(self, **kwargs):
         """Add ``qr_code_url`` to the context."""
