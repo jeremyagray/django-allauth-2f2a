@@ -26,8 +26,8 @@
 #
 """Customized test forms."""
 
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit
+# from crispy_forms.helper import FormHelper
+# from crispy_forms.layout import Submit
 
 from allauth_2f2a.forms import TOTPAuthenticateForm
 
@@ -36,12 +36,12 @@ class CrispyTOTPAuthenticateForm(TOTPAuthenticateForm):
     """Crispy TOTP authentication."""
 
     def __init__(self, *args, **kwargs):
-        """Login form initialization."""
+        """Crispy form example for testing."""
         super().__init__(*args, **kwargs)
 
         # Add the crispy forms helper.
-        self.helper = FormHelper(self)
-        self.helper.form_method = "post"
-        self.helper.layout.append(
-            Submit("submit", "Authenticate", css_class="btn-primary"),
-        )
+        # self.helper = FormHelper(self)
+        # self.helper.form_method = "post"
+        # self.helper.layout.append(
+        #     Submit("submit", "Authenticate", css_class="btn-primary"),
+        # )
