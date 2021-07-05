@@ -48,8 +48,8 @@ setup(
     install_requires=[
         "django>=2.2",
         "qrcode>=5.3",
-        "django-allauth>=0.25",
-        "django-otp>=0.3.12",
+        "django-allauth>=0.44",
+        "django-otp>=1.0.0",
     ],
     author="Jeremy A Gray",
     author_email="gray@flyquackswim.com",
