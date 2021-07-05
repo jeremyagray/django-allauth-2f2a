@@ -28,4 +28,4 @@
 
 include README.rst
 include LICENSE
-recursive-include allauth_2fa/templates *
+recursive-include allauth_2f2a/templates *
