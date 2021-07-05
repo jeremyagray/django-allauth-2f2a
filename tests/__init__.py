@@ -4,9 +4,12 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
+# django-allauth-2f2a, a 2fa adapter for django-allauth.
+#
 # ******************************************************************************
 #
-# Copyright 2016 Percipient Networks, LLC.
+# Copyright 2016-2021 Víðir Valberg Guðmundsson and Percipient
+# Networks, LLC.
 # Copyright 2021 Jeremy A Gray <gray@flyquackswim.com>.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
