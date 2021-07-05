@@ -82,7 +82,7 @@ class TwoFactorAuthenticate(FormView):
         """Get the authentication form class."""
         return get_form_class(
             app_settings.TWOFA_FORMS,
-            "authenticate",
+            "authentication",
             "allauth_2f2a.forms.TOTPAuthenticateForm",
         )
 
