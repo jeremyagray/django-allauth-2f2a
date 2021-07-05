@@ -35,23 +35,23 @@
 0.8.1 July 4, 2021
 ==================
 
-* Add python 3.9.
-* Drop python <3.6.
-* Drop Django <2.2, 3.1.
-* Drop django-otp <1.0.
-* Drop django-allauth <0.44.0.
-* Fix all flake8/pydocstyle linting errors.
-* Reformat with black and isort.
-* Support poetry and pyproject.toml.
-* Add black, flake8-docstrings, pydocstyle, isort, pccc, and
-  pre-commit.
+* Add `python`_ 3.9.
+* Drop `python`_ <3.6.
+* Drop `Django`_ <2.2, 3.1.
+* Drop `django-otp`_ <1.0.
+* Drop `django-allauth`_ <0.44.0.
+* Fix all `flake8`_/`pydocstyle`_ linting errors.
+* Reformat with `black`_ and `isort`_.
+* Support `poetry`_ and pyproject.toml.
+* Add `black`_, `flake8-docstrings`_, `pydocstyle`_, `isort`_, `pccc`_, and
+  `pre-commit`_.
 
 0.8.0 July 3, 2021
 ==================
 
-* Fork from django-allauth-2fa to django-allauth-2f2a.
-* Improves documentation for protection of Django admin with
-  2FA. Contributed by @hailkomputer in #91.
+* Fork from `django-allauth-2fa`_ to `django-allauth-2f2a`_.
+* Improves documentation for protection of `Django`_ admin with
+  `2FA`_. Contributed by @hailkomputer in #91.
 * Autocomplete on the token entry form is disabled. Contributed by
   @qvicksilver in #95.
 
@@ -195,3 +195,38 @@
 =================
 
 * Initial version by Víðir Valberg Guðmundsson
+
+.. _2FA: https://en.wikipedia.org/wiki/Multi-factor_authentication
+.. _CI: https://en.wikipedia.org/wiki/Continuous_integration
+.. _CSP: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
+.. _Django: https://www.djangoproject.com/
+.. _FQS: https://www.flyquackswim.com/
+.. _Jeremy A Gray: https://github.com/jeremyagray
+.. _Percipient Networks: https://www.strongarm.io
+.. _Python: https://www.python.org/
+.. _QR code: https://en.wikipedia.org/wiki/QR_code
+.. _SVG: https://en.wikipedia.org/wiki/Scalable_Vector_Graphics
+.. _Víðir Valberg Guðmundsson (@valberg): https://github.com/valberg
+.. _black: https://github.com/psf/black
+.. _content security policies: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
+.. _content security policy: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
+.. _django-allauth documentation: https://django-allauth.readthedocs.io/en/latest/installation.html
+.. _django-allauth-2f2a: https://github.com/jeremyagray/django-allauth-2f2a
+.. _django-allauth-2fa: https://github.com/percipient/django-allauth-2fa
+.. _django-allauth: https://github.com/pennersr/django-allauth
+.. _django-crispy-forms documentation: https://django-crispy-forms.readthedocs.io/
+.. _django-crispy-forms: https://github.com/django-crispy-forms/django-crispy-forms/
+.. _django-otp documentation: https://django-otp-official.readthedocs.io/en/latest/overview.html#installation
+.. _django-otp: https://github.com/django-otp/django-otp
+.. _django: https://www.djangoproject.com/
+.. _flake8-docstrings: https://gitlab.com/pycqa/flake8-docstrings
+.. _flake8: https://flake8.pycqa.org/
+.. _isort: https://pycqa.github.io/isort/
+.. _pccc: https://github.com/jeremyagray/pccc/
+.. _poetry: https://python-poetry.org/
+.. _pre-commit: https://pre-commit.com/
+.. _pydocstyle: https://github.com/PyCQA/pydocstyle
+.. _pytest: https://pytest.org/
+.. _python: https://www.python.org/
+.. _qrcode: https://github.com/lincolnloop/python-qrcode
+.. _two-factor authentication: https://en.wikipedia.org/wiki/Multi-factor_authentication

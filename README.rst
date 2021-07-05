@@ -89,28 +89,36 @@ Author
 `django-allauth-2fa`_ was originally created by `Víðir Valberg Guðmundsson (@valberg)`_ of `Percipient Networks`_.  All modifications after the port to `django-allauth-2f2a`_ are created and maintained by `Jeremy A Gray`_ at `FQS`_.
 
 .. _2FA: https://en.wikipedia.org/wiki/Multi-factor_authentication
+.. _CI: https://en.wikipedia.org/wiki/Continuous_integration
+.. _CSP: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
 .. _Django: https://www.djangoproject.com/
 .. _FQS: https://www.flyquackswim.com/
 .. _Jeremy A Gray: https://github.com/jeremyagray
 .. _Percipient Networks: https://www.strongarm.io
 .. _Python: https://www.python.org/
+.. _QR code: https://en.wikipedia.org/wiki/QR_code
+.. _SVG: https://en.wikipedia.org/wiki/Scalable_Vector_Graphics
 .. _Víðir Valberg Guðmundsson (@valberg): https://github.com/valberg
+.. _black: https://github.com/psf/black
+.. _content security policies: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
+.. _content security policy: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
 .. _django-allauth documentation: https://django-allauth.readthedocs.io/en/latest/installation.html
 .. _django-allauth-2f2a: https://github.com/jeremyagray/django-allauth-2f2a
 .. _django-allauth-2fa: https://github.com/percipient/django-allauth-2fa
 .. _django-allauth: https://github.com/pennersr/django-allauth
+.. _django-crispy-forms documentation: https://django-crispy-forms.readthedocs.io/
+.. _django-crispy-forms: https://github.com/django-crispy-forms/django-crispy-forms/
 .. _django-otp documentation: https://django-otp-official.readthedocs.io/en/latest/overview.html#installation
 .. _django-otp: https://github.com/django-otp/django-otp
 .. _django: https://www.djangoproject.com/
+.. _flake8-docstrings: https://gitlab.com/pycqa/flake8-docstrings
+.. _flake8: https://flake8.pycqa.org/
+.. _isort: https://pycqa.github.io/isort/
+.. _pccc: https://github.com/jeremyagray/pccc/
+.. _poetry: https://python-poetry.org/
+.. _pre-commit: https://pre-commit.com/
+.. _pydocstyle: https://github.com/PyCQA/pydocstyle
+.. _pytest: https://pytest.org/
 .. _python: https://www.python.org/
 .. _qrcode: https://github.com/lincolnloop/python-qrcode
 .. _two-factor authentication: https://en.wikipedia.org/wiki/Multi-factor_authentication
-.. _django-crispy-forms: https://github.com/django-crispy-forms/django-crispy-forms/
-.. _django-crispy-forms documentation: https://django-crispy-forms.readthedocs.io/
-.. _pytest: https://pytest.org/
-.. _CSP: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
-.. _content security policy: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
-.. _content security policies: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
-.. _QR code: https://en.wikipedia.org/wiki/QR_code
-.. _CI: https://en.wikipedia.org/wiki/Continuous_integration
-.. _SVG: https://en.wikipedia.org/wiki/Scalable_Vector_Graphics
