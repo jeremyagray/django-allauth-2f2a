@@ -44,7 +44,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.urls import reverse_lazy
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from django.views.generic import FormView
 from django.views.generic import TemplateView
 from django_otp.plugins.otp_static.models import StaticToken
@@ -216,7 +216,7 @@ class TwoFactorSetup(LoginRequiredMixin, FormView):
             return uri
         # Serve QR code from data: protocol.  Beware the CSP implications.
         else:
-            return "data:image/svg+xml;base64,%s" % force_text(b64encode(svg_data))
+            return f"data:image/svg+xml;base64,{force_str(b64encode(svg_data))}"
 
     def get_context_data(self, **kwargs):
         """Add ``qr_code_url`` to the context."""
