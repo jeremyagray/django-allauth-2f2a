@@ -30,6 +30,7 @@
 
 import django
 
+DEBUG = True
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 SECRET_KEY = "not_empty"
 SITE_ID = 1
@@ -38,7 +39,7 @@ ALLOWED_HOSTS = ["*"]
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": ":memory:",
+        "NAME": "db.sqlite3",
     }
 }
 

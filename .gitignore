@@ -35,7 +35,7 @@ __pycache__/
 .python-version
 
 # Django.
-db.sqlite
+db.sqlite3
 
 # Build.
 .eggs/
