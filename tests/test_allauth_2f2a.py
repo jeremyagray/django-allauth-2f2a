@@ -28,6 +28,8 @@
 #
 """allauth_2f2a tests."""
 
+import base64
+import re
 from urllib.parse import parse_qsl
 from urllib.parse import urlencode
 from urllib.parse import urlparse
@@ -556,9 +558,30 @@ class TestQRCodeGeneration(TestCase):
         user.set_password("doe")
         user.save()
         self.client.post(reverse("account_login"), {"login": "john", "password": "doe"})
-        resp = self.client.get(reverse("two-factor-setup"))
+        response = self.client.get(reverse("two-factor-setup"))
 
-        self.assertContains(resp, "data:image/svg+xml;base64,")
+        # Should have the data: URI.
+        self.assertRegex(
+            response.content.decode(),
+            r"data:image\/svg\+xml;base64,",
+        )
+
+        # Should have a valid SVG image in the base64 string.
+        # Get the base64 string.
+        svg_match = re.search(
+            r"\"data:image\/svg\+xml;base64,(.*?)\"",
+            response.content.decode(),
+        )
+        # Assert the string is base64 encoded.
+        self.assertEqual(
+            svg_match.group(1),
+            base64.b64encode(base64.b64decode(svg_match.group(1))).decode(),
+        )
+        # Assert the string is a valid SVG image.  Well, SVGish at least.
+        self.assertRegex(
+            base64.b64decode(svg_match.group(1)).decode(),
+            r"<svg.*?>",
+        )
 
     @patchfs
     def test_2fa_setup_file(self, fs):
@@ -571,11 +594,12 @@ class TestQRCodeGeneration(TestCase):
         user.save()
         setattr(app_settings, "QRCODE_TYPE", "file")
         self.client.post(reverse("account_login"), {"login": "john", "password": "doe"})
-        resp = self.client.get(reverse("two-factor-setup"))
+        response = self.client.get(reverse("two-factor-setup"))
 
-        # This could use a regular expression matching
-        # ``qrcodes/[a-f0-9]{32}\.svg``.
-        self.assertContains(resp, ".svg")
+        self.assertRegex(
+            response.content.decode(),
+            r"qrcodes\/[a-f0-9]{32}\.svg",
+        )
 
     def test_2fa_setup_file_no_dir(self):
         """Test 2FA setup using an SVG file without the qr code directory."""
