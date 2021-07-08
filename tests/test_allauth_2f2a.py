@@ -152,7 +152,7 @@ class Test2Factor(TestCase):
             app_settings,
             "TWOFA_FORMS",
             {
-                "authenticate": "tests.forms.CrispyTOTPAuthenticateForm",
+                "authentication": "tests.forms.CustomTOTPAuthenticateForm",
                 "device": "allauth_2f2a.forms.TOTPDeviceForm",
                 "remove": "allauth_2f2a.forms.TOTPDeviceRemoveForm",
             },
