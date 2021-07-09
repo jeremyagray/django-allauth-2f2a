@@ -37,8 +37,10 @@ from urllib.parse import urlunparse
 
 from allauth.account.signals import user_logged_in
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ImproperlyConfigured
+from django.forms import ValidationError
 from django.test import TestCase
 from django.test import override_settings
 from django.urls import reverse
@@ -147,6 +149,246 @@ class Test2Factor(TestCase):
 
         # Ensure the signal is received as expected.
         self.assertEqual(self.user_logged_in_count, 1)
+
+    def test_2fa_setup(self):
+        """Should setup device and redirect to backup tokens."""
+        # Create a user.
+        user = get_user_model().objects.create(username="john")
+        user.set_password("doe")
+        user.save()
+
+        # Login.
+        response = self.client.post(
+            reverse("account_login"),
+            {"login": "john", "password": "doe"},
+        )
+
+        # GET the setup page.
+        response = self.client.get(
+            reverse("two-factor-setup"),
+        )
+
+        # Find the device created by GET.
+        device = user.totpdevice_set.filter(confirmed=False).first()
+
+        # Calculate the token.
+        totp = TOTP(
+            device.bin_key,
+            device.step,
+            device.t0,
+            device.digits,
+        )
+
+        # POST the token to the setup page.
+        response = self.client.post(
+            reverse("two-factor-setup"),
+            {
+                "token": totp.token(),
+            },
+        )
+
+        self.assertRedirects(
+            response,
+            reverse("two-factor-backup"),
+        )
+
+    def test_2fa_already_setup(self):
+        """Should redirect to backup tokens."""
+        # Create a user.
+        user = get_user_model().objects.create(username="john")
+        user.set_password("doe")
+        user.save()
+
+        # Login.
+        self.client.post(
+            reverse("account_login"),
+            {"login": "john", "password": "doe"},
+        )
+
+        # GET the setup page.
+        self.client.get(
+            reverse("two-factor-setup"),
+        )
+
+        # Find the device created by GET.
+        device = user.totpdevice_set.filter(confirmed=False).first()
+
+        # Calculate the token.
+        totp = TOTP(
+            device.bin_key,
+            device.step,
+            device.t0,
+            device.digits,
+        )
+
+        # POST the token to the setup page.
+        response = self.client.post(
+            reverse("two-factor-setup"),
+            {
+                "token": totp.token(),
+            },
+        )
+
+        self.assertRedirects(
+            response,
+            reverse("two-factor-backup"),
+        )
+
+        # GET the setup page again.
+        self.client.get(
+            reverse("two-factor-setup"),
+        )
+
+        # Since 2FA is configured, should redirect to backup token
+        # generator.
+        self.assertRedirects(
+            response,
+            reverse("two-factor-backup"),
+        )
+
+    def test_2fa_generate_backup_tokens(self):
+        """Should generate backup tokens."""
+        # Create a user.
+        user = get_user_model().objects.create(username="john")
+        user.set_password("doe")
+        user.save()
+
+        # Login.
+        self.client.post(
+            reverse("account_login"),
+            {"login": "john", "password": "doe"},
+        )
+
+        # GET the setup page.
+        self.client.get(
+            reverse("two-factor-setup"),
+        )
+
+        # Find the device created by GET.
+        device = user.totpdevice_set.filter(confirmed=False).first()
+
+        # Calculate the token.
+        totp = TOTP(
+            device.bin_key,
+            device.step,
+            device.t0,
+            device.digits,
+        )
+
+        # POST the token to the setup page.
+        response = self.client.post(
+            reverse("two-factor-setup"),
+            {
+                "token": totp.token(),
+            },
+        )
+
+        self.assertRedirects(
+            response,
+            reverse("two-factor-backup"),
+        )
+
+        # POST to make new tokens.
+        response = self.client.post(
+            reverse("two-factor-backup"),
+        )
+
+        self.assertContains(
+            response,
+            "Two-Factor Authentication Backup Tokens",
+        )
+
+    def test_2fa_setup_bad_token(self):
+        """Should raise ``django.forms.ValidationError``."""
+        # Create a user.
+        user = get_user_model().objects.create(username="john")
+        user.set_password("doe")
+        user.save()
+
+        # Login.
+        self.client.post(
+            reverse("account_login"),
+            {"login": "john", "password": "doe"},
+        )
+
+        # GET the setup page.
+        self.client.get(
+            reverse("two-factor-setup"),
+        )
+
+        # POST the token to the setup page.
+        response = self.client.post(
+            reverse("two-factor-setup"),
+            {
+                "token": "123456",
+            },
+        )
+
+        # Should rerender the form successfully.
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        # Should contain the error message.
+        self.assertContains(
+            response,
+            "Setup Two-Factor Authentication",
+        )
+
+    def test_2fa_remove(self):
+        """Should remove device and redirect to backup tokens."""
+        # Create a user.
+        user = get_user_model().objects.create(username="john")
+        user.set_password("doe")
+        user.save()
+
+        # Login.
+        response = self.client.post(
+            reverse("account_login"),
+            {"login": "john", "password": "doe"},
+        )
+
+        # GET the setup page.
+        response = self.client.get(
+            reverse("two-factor-setup"),
+        )
+
+        # Find the device created by GET.
+        device = user.totpdevice_set.filter(confirmed=False).first()
+
+        # Calculate the token.
+        totp = TOTP(
+            device.bin_key,
+            device.step,
+            device.t0,
+            device.digits,
+        )
+
+        # POST the token to the setup page.
+        response = self.client.post(
+            reverse("two-factor-setup"),
+            {
+                "token": totp.token(),
+            },
+        )
+
+        # Should redirect to 2FA backup token generator.
+        self.assertRedirects(
+            response,
+            reverse("two-factor-backup"),
+        )
+
+        # POST a device removal request.
+        response = self.client.post(
+            reverse("two-factor-remove"),
+        )
+
+        # Should redirect to 2FA setup.
+        self.assertRedirects(
+            response,
+            reverse("two-factor-setup"),
+        )
 
     def test_2fa_login_custom_form(self):
         """Should login when 2fa is configured."""
@@ -455,6 +697,68 @@ class Require2FA(BaseRequire2FAMiddleware):
         return True
 
 
+class NoRequire2FA(BaseRequire2FAMiddleware):
+    """Require 2fa if configured."""
+
+    def require_2fa(self, request):
+        """Determine if 2fa is required if configured."""
+        return False
+
+
+class Require2FANonexistentAllowed(BaseRequire2FAMiddleware):
+    """Require 2fa if configured."""
+
+    allowed_pages = [
+        "bob-is-your-uncle",
+        "account_logout",
+        "account_change_password",
+        "account_reset_password",
+        "two-factor-setup",
+    ]
+
+    def require_2fa(self, request):
+        """Determine if 2fa is required if configured."""
+        return True
+
+
+class Require2FAWithMessage(BaseRequire2FAMiddleware):
+    """Require 2fa if configured and add a message."""
+
+    def require_2fa(self, request):
+        """Determine if 2fa is required and add a message."""
+        messages.info(
+            request,
+            "2fa required",
+            extra_tags="2fa_required",
+        )
+        return True
+
+
+@override_settings(
+    # Don't redirect to an "allowed" URL.
+    LOGIN_REDIRECT_URL="/unnamed-view",
+    # Add the middleware that requires 2FA.
+    MIDDLEWARE=settings.MIDDLEWARE
+    + ("allauth_2f2a.middleware.BaseRequire2FAMiddleware",),
+)
+class TestRequire2FAMiddlewareNotConfigured(TestCase):
+    """Unconfigured 2fa middleware tests."""
+
+    def test_require2fa_not_implemented(self):
+        """Should raise ``NotImplementedError``."""
+        user = get_user_model().objects.create(username="john")
+        user.set_password("doe")
+        user.save()
+
+        self.assertRaises(
+            NotImplementedError,
+            self.client.post,
+            reverse("account_login"),
+            {"login": "john", "password": "doe"},
+            follow=True,
+        )
+
+
 @override_settings(
     # Don't redirect to an "allowed" URL.
     LOGIN_REDIRECT_URL="/unnamed-view",
@@ -475,12 +779,58 @@ class TestRequire2FAMiddleware(TestCase):
             {"login": "john", "password": "doe"},
             follow=True,
         )
+
         # The user is redirected to the 2FA setup page.
         self.assertRedirects(
             resp,
             reverse("two-factor-setup"),
             fetch_redirect_response=False,
         )
+
+    @override_settings(
+        # Don't redirect to an "allowed" URL.
+        LOGIN_REDIRECT_URL="/unnamed-view",
+        # Add the middleware that requires 2FA.
+        MIDDLEWARE=settings.MIDDLEWARE + ("tests.test_allauth_2f2a.NoRequire2FA",),
+    )
+    def test_no_2fa_not_required(self):
+        """Should redirect to ``LOGIN_REDIRECT_URL``."""
+        user = get_user_model().objects.create(username="john")
+        user.set_password("doe")
+        user.save()
+
+        resp = self.client.post(
+            reverse("account_login"),
+            {"login": "john", "password": "doe"},
+            follow=True,
+        )
+
+        # The user is redirected to ``LOGIN_REDIRECT_URL``.
+        self.assertRedirects(
+            resp,
+            settings.LOGIN_REDIRECT_URL,
+            fetch_redirect_response=False,
+        )
+
+    @override_settings(
+        # Don't redirect to an "allowed" URL.
+        LOGIN_REDIRECT_URL="/unnamed-view",
+        # Add the middleware that requires 2FA.
+        MIDDLEWARE=settings.MIDDLEWARE
+        + ("tests.test_allauth_2f2a.Require2FANonexistentAllowed",),
+    )
+    def test_no_2fa_nonexistent_allowed(self):
+        """Should warn on nonexistent URL."""
+        user = get_user_model().objects.create(username="john")
+        user.set_password("doe")
+        user.save()
+
+        with self.assertWarns(UserWarning):
+            self.client.post(
+                reverse("account_login"),
+                {"login": "john", "password": "doe"},
+                follow=True,
+            )
 
     def test_2fa(self):
         """Should login when 2fa is configured."""
@@ -517,6 +867,60 @@ class TestRequire2FAMiddleware(TestCase):
             fetch_redirect_response=False,
         )
 
+    def test_2fa_already_configured(self):
+        """Should access all URLs.."""
+        # Create a user.
+        user = get_user_model().objects.create(username="john")
+        user.set_password("doe")
+        user.save()
+
+        # Login.
+        response = self.client.post(
+            reverse("account_login"),
+            {"login": "john", "password": "doe"},
+        )
+
+        # GET the setup page.
+        response = self.client.get(
+            reverse("two-factor-setup"),
+        )
+
+        # Find the device created by GET.
+        device = user.totpdevice_set.filter(confirmed=False).first()
+
+        # Calculate the token.
+        totp = TOTP(
+            device.bin_key,
+            device.step,
+            device.t0,
+            device.digits,
+        )
+
+        # POST the token to the setup page.
+        response = self.client.post(
+            reverse("two-factor-setup"),
+            {
+                "token": totp.token(),
+            },
+        )
+
+        # Should redirect to 2FA backup token generator.
+        self.assertRedirects(
+            response,
+            reverse("two-factor-backup"),
+        )
+
+        # Load a 2fa protected URL.
+        response = self.client.get(
+            settings.LOGIN_REDIRECT_URL,
+        )
+
+        # Should load successfully.
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
     @override_settings(
         INSTALLED_APPS=settings.INSTALLED_APPS + ("django.contrib.messages",),
         # This doesn't seem to stack nicely with the class-based one,
@@ -542,6 +946,33 @@ class TestRequire2FAMiddleware(TestCase):
         # The user is redirected to the 2FA setup page.
         self.assertRedirects(
             resp, reverse("two-factor-setup"), fetch_redirect_response=False
+        )
+
+    @override_settings(
+        INSTALLED_APPS=settings.INSTALLED_APPS + ("django.contrib.messages",),
+        MIDDLEWARE=settings.MIDDLEWARE
+        + (
+            "tests.test_allauth_2f2a.Require2FAWithMessage",
+            "django.contrib.messages.middleware.MessageMiddleware",
+        ),
+    )
+    def test_with_2fa_messages(self):
+        """Should redirect to 2fa setup."""
+        user = get_user_model().objects.create(username="john")
+        user.set_password("doe")
+        user.save()
+
+        response = self.client.post(
+            reverse("account_login"),
+            {"login": "john", "password": "doe"},
+            follow=True,
+        )
+
+        # The user is redirected to the 2FA setup page.
+        self.assertRedirects(
+            response,
+            reverse("two-factor-setup"),
+            fetch_redirect_response=False,
         )
 
 

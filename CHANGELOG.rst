@@ -35,6 +35,7 @@
 0.9.0
 =====
 
+* Finish test coverage.
 * Change URL paths to use ``/2fa/<function>/`` and names
   ``two-factor-<function>``.
 * Change URL routes to use ``django.urls.re_path()`` instead of
