@@ -67,6 +67,12 @@ Currently, tests can be run using the standard Django testing facility:
 
     python manage.py test
 
+or by running tox:
+
+.. code-block:: bash
+
+    tox
+
 Project tests will be moved to pytest in the future.
 
 Running the Test Project
@@ -82,6 +88,34 @@ The test project can also be used as a minimal example using the following:
     DJANGO_SETTINGS_MODULE=tests.settings python manage.py runserver
     # Run the shell.
     DJANGO_SETTINGS_MODULE=tests.settings python manage.py shell
+
+Contributing
+============
+
+* Create an issue/pull request.  Check the roadmap for ideas.
+* All tox targets should pass.  That includes all tests in all
+  supported environments and all the linting checks (black, isort,
+  flake8 and flake8-docstrings).
+* Test coverage should be 100%.  New features should have new tests.
+
+Roadmap
+=======
+
+* implement other OTP/2FA methods in addition to TOTP (see https://github.com/valohai/django-allauth-2fa/issues/23)
+  * static
+  * HOTP
+  * YubiKey
+  * Twilio
+* clarify code comments
+* clarify documentation and improve examples
+* publish documentation
+* include docstrings in published documentation
+* complete meaningful test coverage (make sure the 100% is not just the number)
+* generate `SVG`_ codes as files (completed 0.9.0)
+* allow configurable form classes (make your forms `crispy`_; completed 0.9.0)
+* complete test coverage (completed 0.9.0)
+* require `black`_, `flake8-docstrings`_, `pydocstyle`_, `isort`_, `pccc`_, and
+  `pre-commit`_ (completed 0.8.1)
 
 Author
 ======
