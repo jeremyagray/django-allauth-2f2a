@@ -45,6 +45,10 @@ dist : clean build
 commit :
 	pre-commit run --all-files
 
+deploy : test-all requirements.txt
+	poetry update
+	git checkout main && git push fqs
+
 lint :
 	black --check allauth_2f2a tests setup.py
 	isort --check allauth_2f2a tests setup.py
@@ -61,3 +65,6 @@ upload:
 
 upload-test:
 	python3 -m twine upload --verbose --repository testpypi dist/*
+
+requirements.txt: poetry.lock
+	./freeze.sh > $(@)
