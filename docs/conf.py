@@ -53,8 +53,8 @@ copyright = (
 author = (
     "Víðir Valberg Guðmundsson, Percipient Networks;" " Jeremy A Gray, FlyQuackSwim"
 )
-version = "0.9.0"
-release = "0.9.0"
+version = "0.9.1"
+release = "0.9.1"
 language = None
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 pygments_style = "sphinx"
