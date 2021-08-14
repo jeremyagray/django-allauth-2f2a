@@ -102,10 +102,12 @@ Roadmap
 =======
 
 * implement other OTP/2FA methods in addition to TOTP (see https://github.com/valohai/django-allauth-2fa/issues/23)
+
   * static
   * HOTP
   * YubiKey
   * Twilio
+
 * clarify code comments
 * clarify documentation and improve examples
 * publish documentation
@@ -136,6 +138,7 @@ Author
 .. _black: https://github.com/psf/black
 .. _content security policies: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
 .. _content security policy: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
+.. _crispy: https://github.com/django-crispy-forms/django-crispy-forms/
 .. _django-allauth documentation: https://django-allauth.readthedocs.io/en/latest/installation.html
 .. _django-allauth-2f2a: https://github.com/jeremyagray/django-allauth-2f2a
 .. _django-allauth-2fa: https://github.com/percipient/django-allauth-2fa
