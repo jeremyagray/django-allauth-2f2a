@@ -106,28 +106,28 @@ version = "0.9.0"
 
 [tool.poetry.dependencies]
 
-Django = "^3.2"
-django-allauth = "^0.44.0"
-django-loader = "^0.0.3"
-django-otp = "^1.0.6"
-python = "^3.9"
+Django = "~2.2 || ^3.2"
+django-allauth = "^0"
+django-loader = "^0"
+django-otp = "^1"
+python = "^3.6.14"
 qrcode = "^7.1"
 
 [tool.poetry.dev-dependencies]
 
 Sphinx = "^3.4"
 black = { version = "*", allow-prereleases = true }
-docutils = "^0.16"
+docutils = "^0"
 flake8 = "^3.8"
 flake8-docstrings = "^1.5"
 isort = "^5.6"
-pccc = "^0.4"
+pccc = "^0"
 pre-commit = "^2.9"
 pyfakefs = "^4.3"
 pytest = "^6.1"
 pytest-cov = "^2.10"
 pytest-django = "^4.1"
-tox = "^3.23.1"
+tox = "^3.23"
 
 [tool.pytest.ini_options]
 
