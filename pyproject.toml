@@ -106,11 +106,11 @@ version = "0.9.1"
 
 [tool.poetry.dependencies]
 
-Django = "~2.2 || ^3.2"
+Django = "~2.2 || ^3.2 || ^4.0"
 django-allauth = "^0"
 django-loader = "^0"
 django-otp = "^1"
-python = "^3.6.14"
+python = "^3.7"
 qrcode = "^7.1"
 
 [tool.poetry.dev-dependencies]
@@ -124,7 +124,7 @@ isort = "^5.6"
 pccc = "^0"
 pre-commit = "^2.9"
 pyfakefs = "^4.3"
-pytest = "^6.1"
+pytest = "^7.1"
 pytest-cov = "^2.10"
 pytest-django = "^4.1"
 tox = "^3.23"
