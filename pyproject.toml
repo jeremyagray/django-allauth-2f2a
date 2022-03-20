@@ -104,6 +104,21 @@ maintainers = [
 description = "Django allauth adapter for two factor authentication."
 name = "django-allauth-2f2a"
 version = "0.9.1"
+license = "Apache-2.0"
+readme = "README.rst"
+homepage = "https://github.com/jeremyagray/django-allauth-2f2a"
+
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Framework :: Django :: 2.2",
+  "Framework :: Django :: 3.2",
+  "Framework :: Django :: 4.0",
+  "Programming Language :: Python :: 3.6",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+]
 
 [tool.poetry.dependencies]
 
