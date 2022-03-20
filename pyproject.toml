@@ -1,14 +1,12 @@
 # ******************************************************************************
 #
-# pyproject.toml:  poetry and friends configuration
-#
 # SPDX-License-Identifier: Apache-2.0
 #
 # django-allauth-2f2a, a 2fa adapter for django-allauth.
 #
 # ******************************************************************************
 #
-# Copyright 2021 Jeremy A Gray <gray@flyquackswim.com>.
+# Copyright 2021-2022 Jeremy A Gray <gray@flyquackswim.com>.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License.  You
@@ -65,31 +63,34 @@ spell_check = false
 repair = false
 
 types = [
-"build",
-"ci",
-"db",
-"depends",
-"docs",
-"feat",
-"fix",
-"perf",
-"refactor",
-"release",
-"style",
-"test"
+  "build",
+  "ci",
+  "db",
+  "depends",
+  "docs",
+  "feat",
+  "fix",
+  "perf",
+  "refactor",
+  "release",
+  "style",
+  "test"
 ]
 
 scopes = [
-"2fa",
-"fake",
+  "2fa",
+  "fake",
+  "testing",
+  "tooling",
 ]
 
 footers = [
-"signed-off-by"
+  "github-closes",
+  "signed-off-by",
 ]
 
 required_footers = [
-"signed-off-by"
+  "signed-off-by",
 ]
 
 [tool.poetry]
