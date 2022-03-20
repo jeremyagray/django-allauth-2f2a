@@ -103,7 +103,7 @@ maintainers = [
 ]
 description = "Django allauth adapter for two factor authentication."
 name = "django-allauth-2f2a"
-version = "0.9.1"
+version = "0.9.2"
 license = "Apache-2.0"
 readme = "README.rst"
 homepage = "https://github.com/jeremyagray/django-allauth-2f2a"

@@ -1,7 +1,5 @@
 # ******************************************************************************
 #
-# conf.py:  documentation generation settings
-#
 # SPDX-License-Identifier: Apache-2.0
 #
 # django-allauth-2f2a, a 2fa adapter for django-allauth.
@@ -10,7 +8,7 @@
 #
 # Copyright 2016-2021 Víðir Valberg Guðmundsson and Percipient
 # Networks, LLC.
-# Copyright 2021 Jeremy A Gray <gray@flyquackswim.com>.
+# Copyright 2021-2022 Jeremy A Gray <gray@flyquackswim.com>.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License.  You
@@ -53,8 +51,8 @@ copyright = (
 author = (
     "Víðir Valberg Guðmundsson, Percipient Networks;" " Jeremy A Gray, FlyQuackSwim"
 )
-version = "0.9.1"
-release = "0.9.1"
+version = "0.9.2"
+release = "0.9.2"
 language = None
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 pygments_style = "sphinx"
